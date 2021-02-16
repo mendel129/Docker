@@ -1,0 +1,23 @@
+# as always, work in progress
+
+# homeassistant
+docker pull homeassistant/home-assistant
+docker run -d --device /dev/ttyUSB0:/dev/ttyUSB0 --restart=unless-stopped -v /data/hass:/config -v /etc/localtime:/etc/localtime:ro --net=host homeassistant/home-assistant
+
+# nodered
+# https://hub.docker.com/r/nodered/node-red/
+sudo docker pull nodered/node-red:latest
+docker run -it -p 1880:1880 -v /data/nodered:/data --name mynodered nodered/node-red
+
+# nextcloud
+mkdir customnextcloud && cd customnextcloud
+echo -e 'FROM nextcloud:apache\n\nRUN apt-get update && apt-get install -y procps smbclient && rm -rf /var/lib/apt/lists/*' >> Dockerfile
+
+
+# pihole
+docker pull pihole/pihole
+
+# bitwarden_r
+# https://github.com/dani-garcia/bitwarden_rs
+docker pull bitwardenrs/server:latest
+docker run -d --name bitwarden -v /data/bw-data/:/data/ -p 8830:80 bitwardenrs/server:latest
