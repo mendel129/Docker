@@ -13,7 +13,8 @@ docker run -it -p 1880:1880 -v /data/nodered:/data --name mynodered nodered/node
 # mysql
 # https://hub.docker.com/_/mysql/
 docker pull mysql
-docker run --name mysql -e MYSQL_ROOT_PASSWORD=my-very-secret-pw -d mysql
+mkdir mysqldata
+docker run --name mysql -v /data/mysqldata:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=my-very-secret-pw -d mysql
 
 # nextcloud
 mkdir customnextcloud && cd customnextcloud
