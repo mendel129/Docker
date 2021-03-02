@@ -1,4 +1,5 @@
 # as always, work in progress
+docker ps -a
 
 # homeassistant
 docker pull homeassistant/home-assistant
@@ -8,6 +9,11 @@ docker run -d --device /dev/ttyUSB0:/dev/ttyUSB0 --restart=unless-stopped -v /da
 # https://hub.docker.com/r/nodered/node-red/
 sudo docker pull nodered/node-red:latest
 docker run -it -p 1880:1880 -v /data/nodered:/data --name mynodered nodered/node-red
+
+# mysql
+# https://hub.docker.com/_/mysql/
+docker pull mysql
+docker run --name mysql -e MYSQL_ROOT_PASSWORD=my-very-secret-pw -d mysql
 
 # nextcloud
 mkdir customnextcloud && cd customnextcloud
