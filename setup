@@ -4,7 +4,7 @@ docker ps -a
 
 # homeassistant
 docker pull homeassistant/home-assistant
-docker run -d --device /dev/ttyUSB0:/dev/ttyUSB0 --name="home-assistant" --restart=unless-stopped -v /home/core/hass:/config -v /etc/localtime:/etc/localtime:ro homeassistant/home-assistant -p 8123:8123
+docker run -d --device /dev/ttyUSB0:/dev/ttyUSB0 --name="home-assistant" --net=host --restart=unless-stopped -v /home/core/hass:/config -v /etc/localtime:/etc/localtime:ro homeassistant/home-assistant 
 
 # nodered
 # https://hub.docker.com/r/nodered/node-red/
