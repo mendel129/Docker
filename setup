@@ -1,9 +1,10 @@
 # as always, work in progress
 docker ps -a
 
+
 # homeassistant
 docker pull homeassistant/home-assistant
-docker run -d --device /dev/ttyUSB0:/dev/ttyUSB0 --restart=unless-stopped -v /data/hass:/config -v /etc/localtime:/etc/localtime:ro --net=host homeassistant/home-assistant
+docker run -d --device /dev/ttyUSB0:/dev/ttyUSB0 --name="home-assistant" --restart=unless-stopped -v /home/core/hass:/config -v /etc/localtime:/etc/localtime:ro homeassistant/home-assistant -p 8123:8123
 
 # nodered
 # https://hub.docker.com/r/nodered/node-red/
@@ -15,11 +16,19 @@ docker run -it -p 1880:1880 -v /data/nodered:/data --name mynodered nodered/node
 docker pull mysql
 mkdir mysqldata
 docker run --name mysql -v /data/mysqldata:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=my-very-secret-pw -d mysql
+docker pull phpmyadmin/phpmyadmin
+docker images
+docker run --name phpmyadmin -d -p 8080:80 -e PMA_HOST=mysql phpmyadmin/phpmyadmin
+
+#create local network
+docker network create mylocalnetwork
+docker network connect mylocalnetwork mysql
+docker network connect mylocalnetwork phpmyadmin
+docker network connect mylocalnetwork home-assistant
 
 # nextcloud
 mkdir customnextcloud && cd customnextcloud
 echo -e 'FROM nextcloud:apache\n\nRUN apt-get update && apt-get install -y procps smbclient && rm -rf /var/lib/apt/lists/*' >> Dockerfile
-
 
 # pihole
 docker pull pihole/pihole
