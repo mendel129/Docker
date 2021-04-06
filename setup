@@ -21,10 +21,10 @@ docker images
 docker run --name phpmyadmin -d -p 8080:80 -e PMA_HOST=mysql phpmyadmin/phpmyadmin
 
 #create local network
-docker network create mylocalnetwork
-docker network connect mylocalnetwork mysql
-docker network connect mylocalnetwork phpmyadmin
-docker network connect mylocalnetwork home-assistant
+#docker network create mylocalnetwork
+#docker network connect mylocalnetwork mysql
+#docker network connect mylocalnetwork phpmyadmin
+#docker network connect mylocalnetwork home-assistant
 
 # nextcloud
 mkdir customnextcloud && cd customnextcloud
