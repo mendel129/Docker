@@ -15,7 +15,11 @@ docker run -it -p 1880:1880 -v /data/nodered:/data --name mynodered nodered/node
 # https://hub.docker.com/_/mysql/
 docker pull mysql
 mkdir mysqldata
-docker run --name mysql -v /data/mysqldata:/var/lib/mysql -p 3306:3306 -p 33060:33060 -e MYSQL_ROOT_PASSWORD=my-very-secret-pw -d mysql
+mkdir mysqldata/conf.d
+touch mendel.cnf
+echo -e '[mysqld]\r\ndisable_log_bin' >> mysqldata/conf.d/mendel.cnf
+# do replace the password! :-)
+docker run --name mysql -v /data/mysqldata:/var/lib/mysql -v /data/mysqldata/conf.d:/etc/mysql/conf.d -p 3306:3306 -p 33060:33060 -e MYSQL_ROOT_PASSWORD=my-very-secret-pw -d mysql
 docker pull phpmyadmin/phpmyadmin
 docker run --name phpmyadmin -d -p 8080:80 -e PMA_HOST=mysql phpmyadmin/phpmyadmin
 
